@@ -175,27 +175,26 @@ function handleRapidQuoteSubmit(event) {
 
     if (!rapidQuoteForm) return;
 
-    const nameField = rapidQuoteForm.querySelector('input[name="name"]');
-    const whatsappField = rapidQuoteForm.querySelector('input[name="whatsapp"]');
-    const vehicleTypeField = rapidQuoteForm.querySelector('select[name="vehicleType"]');
-    const brandField = rapidQuoteForm.querySelector('input[name="brand"]');
-    const modelField = rapidQuoteForm.querySelector('input[name="model"]');
-    const yearField = rapidQuoteForm.querySelector('input[name="year"]');
-    const notesField = rapidQuoteForm.querySelector('textarea[name="notes"]');
-    const coverageFields = rapidQuoteForm.querySelectorAll('input[name="coverage"]:checked');
+    if (!validateRapidFormAll()) {
+        const quoteSection = document.getElementById('cotacao-rapida');
+        quoteSection?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
 
-    const requiredFields = [nameField, whatsappField, vehicleTypeField, brandField, modelField, yearField];
-    const valid = requiredFields.every((field) => validateRapidField(field));
-    if (!valid) return;
-
-    const coverages = Array.from(coverageFields).map((field) => field.value);
-    const coveragesText = coverages.length ? coverages.map((item) => `✅ ${item}`).join('\n') : 'Nenhuma cobertura selecionada.';
-    const notes = notesField?.value.trim() || 'Sem observações adicionais.';
-
-    const message = `📋 *NOVA SOLICITAÇÃO DE COTAÇÃO*\n\n👤 *Cliente*\nNome: ${nameField.value.trim()}\nWhatsApp: ${whatsappField.value.trim()}\n\n🚗 *Veículo*\nTipo: ${vehicleTypeField.value}\nMarca: ${brandField.value.trim()}\nModelo: ${modelField.value.trim()}\nAno: ${yearField.value.trim()}\n\n🛡️ *Coberturas de Interesse*\n${coveragesText}\n\n📝 *Observações*\n${notes}\n\nObrigado! Aguardo o contato para receber minha cotação.`;
-
+    const message = buildRapidMessage();
     const whatsappUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+
+    try {
+        const win = window.open(whatsappUrl, '_blank');
+        if (!win) {
+            copyToClipboard(message);
+            alert('O navegador bloqueou a abertura do WhatsApp. A mensagem foi copiada para a área de transferência. Cole no WhatsApp para enviar.');
+        }
+    } catch (err) {
+        copyToClipboard(message);
+        alert('Não foi possível abrir o WhatsApp — mensagem copiada para a área de transferência.');
+    }
+
     rapidQuoteForm.reset();
 }
 
@@ -252,17 +251,27 @@ function buildRapidMessage() {
 }
 
 function openRapidWhatsAppFromPage(event) {
-    // If the rapid form exists and has a client name, open WhatsApp with message built from form
     if (rapidQuoteForm) {
-        const nameField = rapidQuoteForm.querySelector('input[name="name"]');
-        const hasName = nameField && nameField.value.trim();
-        if (hasName) {
-            const message = buildRapidMessage();
-            const whatsappUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-            rapidQuoteForm.reset();
+        if (!validateRapidFormAll()) {
+            const quoteSection = document.getElementById('cotacao-rapida');
+            quoteSection?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return;
         }
+
+        const message = buildRapidMessage();
+        const whatsappUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${encodeURIComponent(message)}`;
+        try {
+            const win = window.open(whatsappUrl, '_blank');
+            if (!win) {
+                copyToClipboard(message);
+                alert('Abertura bloqueada. Mensagem copiada para a área de transferência.');
+            }
+        } catch (err) {
+            copyToClipboard(message);
+            alert('Erro ao abrir o WhatsApp — mensagem copiada para a área de transferência.');
+        }
+        rapidQuoteForm.reset();
+        return;
     }
 
     // Otherwise scroll to the quote section to let the user fill the form
@@ -275,3 +284,52 @@ function openRapidWhatsAppFromPage(event) {
 document.querySelectorAll('.open-rapid-whatsapp').forEach((btn) => {
     btn.addEventListener('click', openRapidWhatsAppFromPage);
 });
+
+function validateRapidFormAll() {
+    if (!rapidQuoteForm) return false;
+    const requiredFields = rapidQuoteForm.querySelectorAll('input[required], select[required]');
+    let allValid = true;
+    requiredFields.forEach((field) => {
+        const valid = validateRapidField(field);
+        if (!valid) allValid = false;
+        if (field.name === 'year' && field.value) {
+            const y = parseInt(field.value, 10);
+            if (isNaN(y) || y < 1900 || y > new Date().getFullYear() + 1) {
+                const error = field.closest('.form-group')?.querySelector('.field-error');
+                if (error) error.textContent = 'Informe um ano válido.';
+                field.classList.add('invalid');
+                allValid = false;
+            }
+        }
+        if (field.name === 'whatsapp' && field.value) {
+            const digits = field.value.replace(/\D/g, '');
+            if (digits.length < 10) {
+                const error = field.closest('.form-group')?.querySelector('.field-error');
+                if (error) error.textContent = 'Informe um telefone válido.';
+                field.classList.add('invalid');
+                allValid = false;
+            }
+        }
+    });
+    return allValid;
+}
+
+function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+        });
+    } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+    }
+}
