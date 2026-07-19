@@ -1,0 +1,1005 @@
+{
+  "version": "8",
+  "dialect": "postgres",
+  "id": "4a643063-1f8f-43f3-9de1-a4a6e772f8c0",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "ddl": [
+    {
+      "values": [
+        "administrador",
+        "corretor"
+      ],
+      "name": "perfil_usuario",
+      "entityType": "enums",
+      "schema": "public"
+    },
+    {
+      "values": [
+        "nova",
+        "em_analise",
+        "cotada",
+        "aguardando_cliente",
+        "fechada",
+        "cancelada"
+      ],
+      "name": "status_cotacao",
+      "entityType": "enums",
+      "schema": "public"
+    },
+    {
+      "values": [
+        "carro",
+        "moto",
+        "caminhao"
+      ],
+      "name": "tipo_veiculo",
+      "entityType": "enums",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "clientes",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "coberturas",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "cotacao_coberturas",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "cotacoes",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "usuarios",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "type": "varchar(160)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "nome",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "type": "varchar(32)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "telefone",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "type": "varchar(254)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "email",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "type": "varchar(120)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "cidade",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "type": "varchar(2)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "estado",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "coberturas"
+    },
+    {
+      "type": "varchar(120)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "nome",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "coberturas"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacao_coberturas"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "cotacao_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacao_coberturas"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "cobertura_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacao_coberturas"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "cliente_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "tipo_veiculo",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "tipo_veiculo",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "varchar(100)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "marca",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "varchar(120)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "modelo",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "ano",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "observacoes",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "status_cotacao",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'nova'",
+      "generated": null,
+      "identity": null,
+      "name": "status",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "type": "varchar(160)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "nome",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "type": "varchar(254)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "email",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "senha_hash",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "type": "perfil_usuario",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'corretor'",
+      "generated": null,
+      "identity": null,
+      "name": "perfil",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "nome",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "clientes_nome_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "telefone",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "clientes_telefone_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "email",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "clientes_email_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "lower(\"email\")",
+          "isExpression": true,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "clientes_email_lower_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "nome",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": true,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "coberturas_nome_unique",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "coberturas"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "cotacao_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "cobertura_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": true,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacao_coberturas_cotacao_cobertura_unique",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacao_coberturas"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "cotacao_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacao_coberturas_cotacao_id_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacao_coberturas"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "cobertura_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacao_coberturas_cobertura_id_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacao_coberturas"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "cliente_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacoes_cliente_id_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "cliente_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "created_at",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacoes_cliente_created_at_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "tipo_veiculo",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacoes_tipo_veiculo_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "status",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacoes_status_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "marca",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacoes_marca_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "modelo",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacoes_modelo_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "created_at",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "cotacoes_created_at_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "lower(\"email\")",
+          "isExpression": true,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": true,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "usuarios_email_lower_unique",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "perfil",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "usuarios_perfil_idx",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "cotacao_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "cotacoes",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "CASCADE",
+      "onDelete": "CASCADE",
+      "name": "cotacao_coberturas_cotacao_id_cotacoes_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "cotacao_coberturas"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "cobertura_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "coberturas",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "CASCADE",
+      "onDelete": "RESTRICT",
+      "name": "cotacao_coberturas_cobertura_id_coberturas_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "cotacao_coberturas"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "cliente_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "clientes",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "CASCADE",
+      "onDelete": "RESTRICT",
+      "name": "cotacoes_cliente_id_clientes_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "clientes_pkey",
+      "schema": "public",
+      "table": "clientes",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "coberturas_pkey",
+      "schema": "public",
+      "table": "coberturas",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "cotacao_coberturas_pkey",
+      "schema": "public",
+      "table": "cotacao_coberturas",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "cotacoes_pkey",
+      "schema": "public",
+      "table": "cotacoes",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "usuarios_pkey",
+      "schema": "public",
+      "table": "usuarios",
+      "entityType": "pks"
+    },
+    {
+      "value": "length(trim(\"nome\")) > 0",
+      "name": "clientes_nome_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "value": "length(trim(\"telefone\")) > 0",
+      "name": "clientes_telefone_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "value": "\"estado\" IS NULL OR \"estado\" ~ '^[A-Z]{2}$'",
+      "name": "clientes_estado_formato",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "clientes"
+    },
+    {
+      "value": "length(trim(\"nome\")) > 0",
+      "name": "coberturas_nome_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "coberturas"
+    },
+    {
+      "value": "length(trim(\"marca\")) > 0",
+      "name": "cotacoes_marca_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "value": "length(trim(\"modelo\")) > 0",
+      "name": "cotacoes_modelo_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "value": "\"ano\" BETWEEN 1886 AND 2100",
+      "name": "cotacoes_ano_valido",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "cotacoes"
+    },
+    {
+      "value": "length(trim(\"nome\")) > 0",
+      "name": "usuarios_nome_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "value": "length(trim(\"email\")) > 0",
+      "name": "usuarios_email_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "usuarios"
+    },
+    {
+      "value": "length(trim(\"senha_hash\")) > 0",
+      "name": "usuarios_senha_hash_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "usuarios"
+    }
+  ],
+  "renames": []
+}
