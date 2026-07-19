@@ -42,6 +42,25 @@ body::before {
     animation: floatBackground 24s ease-in-out infinite;
 }
 
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(120deg, rgba(40,40,50,0.06), rgba(20,12,22,0.06), rgba(40,20,10,0.06));
+    opacity: 0.9;
+    pointer-events: none;
+    animation: moveGradient 18s linear infinite;
+}
+
+@keyframes moveGradient {
+    0% { transform: translateX(0) translateY(0) scale(1); }
+    25% { transform: translateX(-6%) translateY(2%) scale(1.02); }
+    50% { transform: translateX(0%) translateY(-3%) scale(1.01); }
+    75% { transform: translateX(6%) translateY(1%) scale(0.99); }
+    100% { transform: translateX(0) translateY(0) scale(1); }
+}
+
 @keyframes floatBackground {
     0%, 100% {
         transform: translate3d(0,0,0);
@@ -132,6 +151,13 @@ button {
     background: linear-gradient(135deg, rgba(201, 162, 39, 0.15), rgba(255, 255, 255, 0.06));
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--gold);
+}
+
+.site-logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    border-radius: 10px;
 }
 
 .brand-text strong {
@@ -324,7 +350,25 @@ main {
 }
 
 .premium-card {
-    min-height: 420px;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.card-grid {
+    align-items: start;
+}
+
+.card-grid > * {
+    align-self: stretch;
+}
+
+.card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    flex: 1 1 auto;
 }
 
 .card-media {
