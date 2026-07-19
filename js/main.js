@@ -232,3 +232,46 @@ simulationForm?.querySelectorAll('input[required], select[required], textarea[re
 rapidQuoteForm?.querySelectorAll('input[required], select[required]').forEach((field) => {
     field.addEventListener('blur', () => validateRapidField(field));
 });
+
+function buildRapidMessage() {
+    const nameField = rapidQuoteForm.querySelector('input[name="name"]');
+    const whatsappField = rapidQuoteForm.querySelector('input[name="whatsapp"]');
+    const vehicleTypeField = rapidQuoteForm.querySelector('select[name="vehicleType"]');
+    const brandField = rapidQuoteForm.querySelector('input[name="brand"]');
+    const modelField = rapidQuoteForm.querySelector('input[name="model"]');
+    const yearField = rapidQuoteForm.querySelector('input[name="year"]');
+    const notesField = rapidQuoteForm.querySelector('textarea[name="notes"]');
+    const coverageFields = rapidQuoteForm.querySelectorAll('input[name="coverage"]:checked');
+
+    const coverages = Array.from(coverageFields).map((field) => field.value);
+    const coveragesText = coverages.length ? coverages.map((item) => `✅ ${item}`).join('\n') : 'Nenhuma cobertura selecionada.';
+    const notes = notesField?.value.trim() || 'Sem observações adicionais.';
+
+    const message = `📋 *NOVA SOLICITAÇÃO DE COTAÇÃO*\n\n👤 *Cliente*\nNome: ${nameField?.value.trim() || '-'}\nWhatsApp: ${whatsappField?.value.trim() || '-'}\n\n🚗 *Veículo*\nTipo: ${vehicleTypeField?.value || '-'}\nMarca: ${brandField?.value.trim() || '-'}\nModelo: ${modelField?.value.trim() || '-'}\nAno: ${yearField?.value.trim() || '-'}\n\n🛡️ *Coberturas de Interesse*\n${coveragesText}\n\n📝 *Observações*\n${notes}\n\nObrigado! Aguardo o contato para receber minha cotação.`;
+    return message;
+}
+
+function openRapidWhatsAppFromPage(event) {
+    // If the rapid form exists and has a client name, open WhatsApp with message built from form
+    if (rapidQuoteForm) {
+        const nameField = rapidQuoteForm.querySelector('input[name="name"]');
+        const hasName = nameField && nameField.value.trim();
+        if (hasName) {
+            const message = buildRapidMessage();
+            const whatsappUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            rapidQuoteForm.reset();
+            return;
+        }
+    }
+
+    // Otherwise scroll to the quote section to let the user fill the form
+    const quoteSection = document.getElementById('cotacao-rapida');
+    if (quoteSection) {
+        quoteSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+document.querySelectorAll('.open-rapid-whatsapp').forEach((btn) => {
+    btn.addEventListener('click', openRapidWhatsAppFromPage);
+});
