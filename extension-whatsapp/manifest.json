@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Abrir WhatsApp - Cotação",
+  "version": "1.0",
+  "description": "Extensão simples para abrir WhatsApp com mensagem formatada",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Enviar para WhatsApp"
+  },
+  "permissions": ["tabs"],
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "https://api.whatsapp.com/*",
+    "https://wa.me/*"
+  ],
+  "icons": {
+    "128": "icon-128.png"
+  }
+}

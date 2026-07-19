@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abrir WhatsApp</title>
+  <style>
+    body{width:320px;font-family:Inter,Arial,Helvetica,sans-serif;padding:12px;margin:0}
+    h3{margin:0 0 8px 0;font-size:16px}
+    input,textarea{box-sizing:border-box;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px;width:100%}
+    button{width:100%;padding:10px;border:0;background:#25D366;color:#fff;border-radius:8px;font-weight:600}
+    small{color:#666}
+  </style>
+</head>
+<body>
+  <h3>Solicitar cotação - WhatsApp</h3>
+  <small>Telefone (com DDI): ex. 5511999999999</small>
+  <input id="phone" placeholder="5511999999999" inputmode="numeric" />
+  <textarea id="msg" placeholder="Informe modelo, placa, ..." rows="5"></textarea>
+  <button id="open">📲 Abrir WhatsApp</button>
+  <script src="popup.js"></script>
+</body>
+</html>
