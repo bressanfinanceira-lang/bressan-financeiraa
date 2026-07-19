@@ -1,3 +1,10 @@
+const DEFAULT_PHONE = '5564996024548';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const phoneInput = document.getElementById('phone');
+  if (phoneInput && !phoneInput.value) phoneInput.value = DEFAULT_PHONE;
+});
+
 document.getElementById('open').addEventListener('click', () => {
   const phone = document.getElementById('phone').value.trim();
   const msg = document.getElementById('msg').value.trim();

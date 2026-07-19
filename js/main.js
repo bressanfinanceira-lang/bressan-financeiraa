@@ -16,6 +16,8 @@ const modalTitle = document.getElementById('simulation-modal-title');
 const modalDescription = document.querySelector('.modal-header p');
 const form = simulationForm;
 
+const COMPANY_WHATSAPP = '5564996024548';
+
 const ASSET_LABELS = {
     'Casa': 'Casa',
     'Imóvel': 'Imóvel',
@@ -192,7 +194,7 @@ function handleRapidQuoteSubmit(event) {
 
     const message = `📋 *NOVA SOLICITAÇÃO DE COTAÇÃO*\n\n👤 *Cliente*\nNome: ${nameField.value.trim()}\nWhatsApp: ${whatsappField.value.trim()}\n\n🚗 *Veículo*\nTipo: ${vehicleTypeField.value}\nMarca: ${brandField.value.trim()}\nModelo: ${modelField.value.trim()}\nAno: ${yearField.value.trim()}\n\n🛡️ *Coberturas de Interesse*\n${coveragesText}\n\n📝 *Observações*\n${notes}\n\nObrigado! Aguardo o contato para receber minha cotação.`;
 
-    const whatsappUrl = `https://wa.me/55SEUNUMERO?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     rapidQuoteForm.reset();
 }
