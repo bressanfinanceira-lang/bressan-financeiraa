@@ -285,6 +285,41 @@ document.querySelectorAll('.open-rapid-whatsapp').forEach((btn) => {
     btn.addEventListener('click', openRapidWhatsAppFromPage);
 });
 
+/* Toasts and Theme Toggle */
+function showToast(message, type = 'info', duration = 4000) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const t = document.createElement('div');
+    t.className = `toast toast--${type}`;
+    t.textContent = message;
+    container.appendChild(t);
+    // force reflow
+    void t.offsetWidth;
+    t.classList.add('show');
+    setTimeout(() => {
+        t.classList.remove('show');
+        setTimeout(() => t.remove(), 300);
+    }, duration);
+}
+
+function initTheme() {
+    const toggle = document.querySelector('.theme-toggle');
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+
+    toggle?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        showToast(`Tema definido para ${next}`, 'info', 2000);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+});
+
 function validateRapidFormAll() {
     if (!rapidQuoteForm) return false;
     const requiredFields = rapidQuoteForm.querySelectorAll('input[required], select[required]');
