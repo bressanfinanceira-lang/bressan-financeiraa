@@ -11,11 +11,16 @@ async function getById(id) {
 }
 
 async function create({ nome, email, telefone, tipo, valor_solicitado, mensagem }) {
-  const [result] = await db.query(
-    'INSERT INTO simulacoes (nome, email, telefone, tipo, valor_solicitado, mensagem) VALUES (?, ?, ?, ?, ?, ?)',
-    [nome, email, telefone, tipo, valor_solicitado, mensagem]
-  );
-  return result.insertId;
+  const sql = 'INSERT INTO simulacoes (nome, email, telefone, tipo, valor_solicitado, mensagem) VALUES (?, ?, ?, ?, ?, ?)';
+  const params = [nome, email, telefone, tipo, valor_solicitado, mensagem];
+  console.log('Executing SQL (simulacoes.create):', sql, params);
+  try {
+    const [result] = await db.query(sql, params);
+    return result.insertId;
+  } catch (error) {
+    console.error('MySQL error (simulacoes.create):', error, 'SQL:', sql, 'params:', params);
+    throw error;
+  }
 }
 
 module.exports = {

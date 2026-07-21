@@ -1,0 +1,22 @@
+<aside class="admin-sidebar">
+    <div class="brand">
+        <div>
+            <strong>Bressan Admin</strong>
+            <small>Painel administrativo</small>
+        </div>
+    </div>
+    <nav>
+        <a href="/admin/dashboard" class="<%= activeMenu === 'dashboard' ? 'active' : '' %>">Dashboard</a>
+        <a href="/admin/clientes" class="<%= activeMenu === 'clientes' ? 'active' : '' %>">Clientes</a>
+        <a href="/admin/cotacoes" class="<%= activeMenu === 'cotacoes' ? 'active' : '' %>">Cotações</a>
+        <a href="/admin/crm" class="<%= activeMenu === 'crm' ? 'active' : '' %>">CRM</a>
+        <a href="/admin/usuarios" class="<%= activeMenu === 'usuarios' ? 'active' : '' %>">Usuários</a>
+        <a href="/admin/produtos" class="<%= activeMenu === 'produtos' ? 'active' : '' %>">Produtos</a>
+        <a href="/admin/aparencia" class="<%= activeMenu === 'aparencia' ? 'active' : '' %>">Aparência</a>
+        <a href="/admin/configuracoes" class="<%= activeMenu === 'configuracoes' ? 'active' : '' %>">Configurações</a>
+        <a href="/admin/relatorios" class="<%= activeMenu === 'relatorios' ? 'active' : '' %>">Relatórios</a>
+    </nav>
+    <div class="sidebar-footer">
+        <a href="/admin/logout">Sair</a>
+    </div>
+</aside>

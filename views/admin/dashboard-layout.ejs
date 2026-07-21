@@ -1,0 +1,17 @@
+<%- include('admin/partials/head', { title: 'Dashboard' }) %>
+<div class="admin-shell">
+    <%- include('admin/partials/sidebar', { activeMenu: activeMenu }) %>
+    <main class="admin-content">
+        <div class="admin-header">
+            <div>
+                <h1 class="admin-title"><%= pageTitle %></h1>
+                <p class="admin-breadcrumb"><%= pageSubtitle %></p>
+            </div>
+        </div>
+        <div class="admin-panel">
+            <%= body %>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -11,11 +11,16 @@ async function getById(id) {
 }
 
 async function create({ nome, email, telefone }) {
-  const [result] = await db.query(
-    'INSERT INTO clientes (nome, email, telefone) VALUES (?, ?, ?)',
-    [nome, email, telefone]
-  );
-  return result.insertId;
+  const sql = 'INSERT INTO clientes (nome, email, telefone) VALUES (?, ?, ?)';
+  const params = [nome, email, telefone];
+  console.log('Executing SQL (clientes.create):', sql, params);
+  try {
+    const [result] = await db.query(sql, params);
+    return result.insertId;
+  } catch (error) {
+    console.error('MySQL error (clientes.create):', error, 'SQL:', sql, 'params:', params);
+    throw error;
+  }
 }
 
 module.exports = {

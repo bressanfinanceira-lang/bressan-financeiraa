@@ -12,6 +12,7 @@ const errorFeedback = document.querySelector('.form-feedback--error');
 const submitButton = simulationForm?.querySelector('.btn-submit');
 const desiredAssetSelect = simulationForm?.querySelector('select[name="desiredAsset"]');
 const requestTypeInput = simulationForm?.querySelector('input[name="requestType"]');
+const quoteSubmitButton = rapidQuoteForm?.querySelector('.quote-submit');
 const modalTitle = document.getElementById('simulation-modal-title');
 const modalDescription = document.querySelector('.modal-header p');
 const form = simulationForm;
@@ -170,7 +171,7 @@ async function submitForm(event) {
     }
 }
 
-function handleRapidQuoteSubmit(event) {
+async function handleRapidQuoteSubmit(event) {
     event.preventDefault();
 
     if (!rapidQuoteForm) return;
@@ -181,21 +182,49 @@ function handleRapidQuoteSubmit(event) {
         return;
     }
 
-    const message = buildRapidMessage();
-    const whatsappUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${encodeURIComponent(message)}`;
+    const formData = new FormData(rapidQuoteForm);
+    const payload = {
+        name: formData.get('name')?.toString().trim() || '',
+        whatsapp: formData.get('whatsapp')?.toString().trim() || '',
+        vehicleType: formData.get('vehicleType')?.toString().trim() || '',
+        brand: formData.get('brand')?.toString().trim() || '',
+        model: formData.get('model')?.toString().trim() || '',
+        year: formData.get('year')?.toString().trim() || '',
+        coverages: formData.getAll('coverage'),
+        notes: formData.get('notes')?.toString().trim() || '',
+    };
+
+    quoteSubmitButton?.classList.add('loading');
+    quoteSubmitButton?.setAttribute('disabled', '');
+    const originalButtonText = quoteSubmitButton?.textContent?.trim() || 'Enviando...';
+    if (quoteSubmitButton) quoteSubmitButton.textContent = 'Enviando...';
 
     try {
-        const win = window.open(whatsappUrl, '_blank');
-        if (!win) {
-            copyToClipboard(message);
-            alert('O navegador bloqueou a abertura do WhatsApp. A mensagem foi copiada para a área de transferência. Cole no WhatsApp para enviar.');
-        }
-    } catch (err) {
-        copyToClipboard(message);
-        alert('Não foi possível abrir o WhatsApp — mensagem copiada para a área de transferência.');
-    }
+        const response = await fetch(rapidQuoteForm.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
 
-    rapidQuoteForm.reset();
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Erro ao salvar cotação.');
+        }
+
+        showToast('✅ Cotação enviada com sucesso! Em breve nossa equipe entrará em contato.', 'success');
+        rapidQuoteForm.reset();
+    } catch (error) {
+        showToast('❌ Ocorreu um erro ao enviar sua cotação. Tente novamente.', 'error');
+    } finally {
+        if (quoteSubmitButton) {
+            quoteSubmitButton.removeAttribute('disabled');
+            quoteSubmitButton.textContent = originalButtonText;
+            quoteSubmitButton.classList.remove('loading');
+        }
+    }
 }
 
 function validateRapidField(field) {
@@ -251,33 +280,19 @@ function buildRapidMessage() {
 }
 
 function openRapidWhatsAppFromPage(event) {
-    if (rapidQuoteForm) {
-        if (!validateRapidFormAll()) {
-            const quoteSection = document.getElementById('cotacao-rapida');
-            quoteSection?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            return;
-        }
-
-        const message = buildRapidMessage();
-        const whatsappUrl = `https://wa.me/${COMPANY_WHATSAPP}?text=${encodeURIComponent(message)}`;
-        try {
-            const win = window.open(whatsappUrl, '_blank');
-            if (!win) {
-                copyToClipboard(message);
-                alert('Abertura bloqueada. Mensagem copiada para a área de transferência.');
-            }
-        } catch (err) {
-            copyToClipboard(message);
-            alert('Erro ao abrir o WhatsApp — mensagem copiada para a área de transferência.');
-        }
-        rapidQuoteForm.reset();
+    if (!rapidQuoteForm) {
+        const quoteSection = document.getElementById('cotacao-rapida');
+        quoteSection?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
 
-    // Otherwise scroll to the quote section to let the user fill the form
     const quoteSection = document.getElementById('cotacao-rapida');
-    if (quoteSection) {
-        quoteSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    quoteSection?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    if (rapidQuoteForm.requestSubmit) {
+        rapidQuoteForm.requestSubmit();
+    } else {
+        rapidQuoteForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
 }
 

@@ -88,6 +88,30 @@ router.get('/contatos', ensureAdmin, async (req, res) => {
   res.render('admin/mensagens', { mensagens });
 });
 
+router.get('/cotacoes', ensureAdmin, (req, res) => {
+  res.render('admin/cotacoes');
+});
+
+router.get('/crm', ensureAdmin, (req, res) => {
+  res.render('admin/crm');
+});
+
+router.get('/usuarios', ensureAdmin, (req, res) => {
+  res.render('admin/usuarios');
+});
+
+router.get('/produtos', ensureAdmin, (req, res) => {
+  res.render('admin/produtos');
+});
+
+router.get('/aparencia', ensureAdmin, (req, res) => {
+  res.render('admin/aparencia');
+});
+
+router.get('/relatorios', ensureAdmin, (req, res) => {
+  res.render('admin/relatorios');
+});
+
 router.get('/configuracoes', ensureAdmin, (req, res) => {
   res.render('admin/configuracoes');
 });

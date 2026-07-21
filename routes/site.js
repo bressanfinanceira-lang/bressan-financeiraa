@@ -58,6 +58,61 @@ router.post('/simulacao', async (req, res) => {
   res.redirect('/');
 });
 
+router.post('/cotacao', async (req, res) => {
+  const {
+    name,
+    whatsapp,
+    vehicleType,
+    brand,
+    model,
+    year,
+    coverages,
+    notes,
+  } = req.body;
+
+  const nome = name?.trim() || '';
+  const telefone = whatsapp?.trim() || '';
+  const tipo = vehicleType?.trim() || '';
+  const marca = brand?.trim() || '';
+  const modelo = model?.trim() || '';
+  const ano = year?.trim() || '';
+  const observacoes = notes?.trim() || '';
+  const coberturas = Array.isArray(coverages) ? coverages : coverages ? [coverages] : [];
+
+  const mensagem = [
+    `Marca: ${marca}`,
+    `Modelo: ${modelo}`,
+    `Ano: ${ano}`,
+    coberturas.length ? `Coberturas: ${coberturas.join(', ')}` : null,
+    observacoes ? `Observações: ${observacoes}` : null,
+  ]
+    .filter(Boolean)
+    .join('\n');
+
+  console.log('POST /cotacao body:', req.body);
+  console.log('POST /cotacao parsed:', { nome, telefone, tipo, marca, modelo, ano, coberturas, observacoes, mensagem });
+
+  try {
+    console.log("Iniciando salvamento do cliente");
+    const clienteId = await clientesModel.create({ nome, email: '', telefone });
+    console.log("Cliente salvo com sucesso");
+    await simulacoesModel.create({
+      nome,
+      email: '',
+      telefone,
+      tipo,
+      valor_solicitado: 0.0,
+      mensagem,
+    });
+    console.log("Simulação salva com sucesso");
+    console.log("Retornando success:true para o frontend");
+    return res.json({ success: true });
+  } catch (error) {
+    console.error('MySQL error /cotacao:', error);
+    return res.status(500).json({ success: false, message: 'Erro ao salvar cotação.' });
+  }
+});
+
 router.post('/contato', async (req, res) => {
   const { nome, email, telefone, assunto, mensagem } = req.body;
 
